@@ -73,8 +73,7 @@
   
   function onPlayerReady(event)
   {
-    updateTrackListing();
-    loadVideo(event);
+    setTimeout(loadVideo, 1000, event);
   }
   
   function onPlayerStateChange(event)
