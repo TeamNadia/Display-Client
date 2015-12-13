@@ -91,11 +91,7 @@
       console.log("Let's load " + data + "?version=3");
       event.target.clearVideo();
       
-      event.target.loadVideoByUrl(
-        {
-          mediaContentUrl: data + "?version=3"
-        }
-      );
+      event.target.loadVideoByUrl(data + "?version=3");
     });
   }
 </script>
@@ -105,17 +101,22 @@
     
     $.get("/Server/getsongs.php?screen=" + screenId, function(data)
     {
-      var obj = JSON.parse(data);
-      var i;
-      var table = $("#TrackListingTable");
-      var newTableHtml = "";
-      for (i = 0; i < obj.length; i++)
+      if (/^[\],:{}\s]*$/.test(data.replace(/\\["\\\/bfnrtu]/g, '@').
+      replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').
+      replace(/(?:^|:|,)(?:\s*\[)+/g, '')))
       {
-        newTableHtml += '<tr><td><img src="' + obj[i]['thumbnail'] + '"></td><td><span style="font-weight: bold;">' + obj[i]['artist']
-        + '</span><br>' + obj[i]['track'] + '</td><td><input type="hidden" class="hiddenVideoId" value="' + obj[i]['id'] + '"></td></tr>';
+        var obj = JSON.parse(data);
+        var i;
+        var table = $("#TrackListingTable");
+        var newTableHtml = "";
+        for (i = 0; i < obj.length; i++)
+        {
+          newTableHtml += '<tr><td><img src="' + obj[i]['thumbnail'] + '"></td><td><span style="font-weight: bold;">' + obj[i]['artist']
+          + '</span><br>' + obj[i]['track'] + '</td><td><input type="hidden" class="hiddenVideoId" value="' + obj[i]['id'] + '"></td></tr>';
+        }
+        
+        table.html(newTableHtml);
       }
-      
-      table.html(newTableHtml);
     });
   }
   
@@ -141,21 +142,6 @@
       }
     setInterval(updateTrackListing, 2000);
   });
-  
-  // $(document).ready(function()
-  // {
-  //   var videoId = $(".hiddenVideoId:first").attr("value");
-    
-  //   $.get("/Server/geturl.php?screen=" + screenId + "&id=" + videoId, function(data)
-  //   {
-  //     console.log("Let's load " + data + "?version=3");
-  //     player.loadVideoByUrl(
-  //       {
-  //         mediaContentUrl: data + "?version=3"
-  //       }
-  //     );
-  //   });
-  // });
 </script>
 </body>
 </html>
