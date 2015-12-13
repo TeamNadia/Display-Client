@@ -11,6 +11,14 @@
     {
       padding-top: 20px;
     }
+    #ScreenName
+    {
+      font-weight: bold;
+    }
+    #TrackListingTable
+    {
+      border-width: 0;
+    }
   </style>
 </head>
 <body>
@@ -23,6 +31,8 @@
       Your screen is <span id="ScreenName"></span>.
       <br>
       Use the PIN <span id="ScreenPIN"></span> to control this screen.
+      <br>
+      <table id="TrackListingTable"></table>
     </div>
     <div class="col-sm-10">
       <div class="embed-responsive embed-responsive-16by9"> <!-- sets the aspect ratio of the video-->
@@ -37,7 +47,36 @@
 <script src="js/bootstrap.min.js"></script>
 <script src="js/jquery.getUrlParam.js"></script>
 <script>
+  var isUpdatingTrackListing = false;
   var screenId = $(document).getUrlParam("screen");
+    
+  function updateTrackListing()
+  {
+    if (isUpdatingTrackListing == true)
+      return;
+      
+    isUpdatingTrackListing = true;
+    
+    $.get("/Server/getsongs.php?screen=" + screenId, function(data)
+    {
+      var obj = JSON.parse(data);
+      var i;
+      var table = $("#TrackListingTable");
+      var newTableHtml = "";
+      for (i = 0; i < obj.length; i++)
+      {
+        newTableHtml += '<tr><td><img src="' + obj['thumbnail'] + '"></td><td><span style="font-weight: bold;">' + obj['artist']
+        + '</span><br>' + obj['track'];
+      }
+      
+      if (newTableHtml != table.html())
+      {
+        table.html(newTableHtml)
+      }
+      
+      isUpdatingTrackListing = false;
+    });
+  }
   
   $.get("/Server/getscreens.php?showpin=1", function(data)
   {
@@ -55,6 +94,7 @@
     $("#ScreenLocation").html(screenData['location']);
     $("#ScreenPIN").html(screenData['pin']);
     
+    setInterval(updateTrackListing, 2000);
   });
 </script>
 </body>
