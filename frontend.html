@@ -121,20 +121,24 @@
   
   $.get("/Server/getscreens.php?showpin=1", function(data)
   {
-    var obj = JSON.parse(data);
-    var i, screenData;
-    for (i = 0; i < obj.length; i++)
-    {
-      if (obj[i]['id'] == screenId)
+    if (/^[\],:{}\s]*$/.test(data.replace(/\\["\\\/bfnrtu]/g, '@').
+      replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').
+      replace(/(?:^|:|,)(?:\s*\[)+/g, '')))
       {
-        screenData = obj[i];
+        var obj = JSON.parse(data);
+        var i, screenData;
+        for (i = 0; i < obj.length; i++)
+        {
+          if (obj[i]['id'] == screenId)
+          {
+            screenData = obj[i];
+          }
+        }
+        
+        $("#ScreenName").html(screenData['name']);
+        $("#ScreenLocation").html(screenData['location']);
+        $("#ScreenPIN").html(screenData['pin']);
       }
-    }
-    
-    $("#ScreenName").html(screenData['name']);
-    $("#ScreenLocation").html(screenData['location']);
-    $("#ScreenPIN").html(screenData['pin']);
-    
     setInterval(updateTrackListing, 2000);
   });
   
