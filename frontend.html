@@ -89,7 +89,7 @@
   {
     event.target.clearVideo();
     
-    var videoId = $("input.videoId").first().val();
+    var videoId = $("input.hiddenVideoId").first().val();
     alert(videoId);
     
     $.get("/Server/geturl.php?screen=" + screenId + "&id=" + videoId, function(data)
@@ -123,7 +123,7 @@
       for (i = 0; i < obj.length; i++)
       {
         newTableHtml += '<tr><td><img src="' + obj[i]['thumbnail'] + '"></td><td><span style="font-weight: bold;">' + obj[i]['artist']
-        + '</span><br>' + obj[i]['track'] + '</td><td><input type="hidden" class="videoId" id="id" value="' + obj[i]['id'] + '"></td></tr>';
+        + '</span><br>' + obj[i]['track'] + '</td><td><input type="hidden" class="hiddenVideoId" value="' + obj[i]['id'] + '"></td></tr>';
       }
       
       if (newTableHtml != table.html())
