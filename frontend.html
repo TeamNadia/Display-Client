@@ -123,10 +123,8 @@
         + '</span><br>' + obj[i]['track'] + '</td><td><input type="hidden" class="hiddenVideoId" value="' + obj[i]['id'] + '"></td></tr>';
       }
       
-      if (newTableHtml != table.html())
-      {
-        table.html(newTableHtml);
-      }
+      table.html(newTableHtml);
+      
     });
     
     isUpdatingTrackListing = false;
