@@ -76,12 +76,10 @@
   {
     if ($("input.hiddenVideoId")[0])
     {
-      alert("Found ");
       loadVideo(event);
     }  
     else
     {
-      console.log("LOL");
       setTimeout(onPlayerReady, 500, event);
     }
   }
@@ -100,13 +98,12 @@
     event.target.clearVideo();
     
     var videoId = $(".hiddenVideoId:first").attr("value");
-    alert(videoId);
     
     $.get("/Server/geturl.php?screen=" + screenId + "&id=" + videoId, function(data)
     {
-      event.target.cueVideoByUrl(
+      event.target.loadVideoByUrl(
         {
-          mediaContentUrl: data
+          mediaContentUrl: data + "?version=3"
         }
       );
       
