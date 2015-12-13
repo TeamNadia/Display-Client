@@ -5,19 +5,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
+  
+  <style>
+    body
+    {
+      padding-top: 20px;
+    }
+  </style>
 </head>
 <body>
 
- 
-
-
-
 <div class="container-fluid">
   <div class="row">
-    <div class="col-sm-2" style="background-color:lavender;">.col-sm-4</div>
-    <div class="col-sm-10" style="background-color:lavenderblush;">.col-sm-8
+    <div class="col-sm-2">
+      <h3 class="text-center">Welcome to <span id="ScreenLocation"></span></h3>
+      <br>
+      Your screen is <span id="ScreenName"></span>.
+      <br>
+      Use the PIN <span id="ScreenPIN"></span> to control this screen.
+    </div>
+    <div class="col-sm-10">
       <div class="embed-responsive embed-responsive-16by9"> <!-- sets the aspect ratio of the video-->
         <iframe class="embed-responsive-item" src="http://www.youtube.com/embed/ePbKGoIGAXY"></iframe> 
       </div>
@@ -25,5 +32,17 @@
   </div>
 </div>
 
+<!-- Load the JavaScript at the bottom of the page so that it loads faster -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/jquery.getUrlParam.js"></script>
+<script>
+  var screenId = $(document).getUrlParam("screen");
+  $.get("/Server/getscreens.php", function(data)
+  {
+    var obj = JSON.parse(data);
+    alert(data);
+  });
+</script>
 </body>
 </html>
