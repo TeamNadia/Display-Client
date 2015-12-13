@@ -99,15 +99,9 @@
     });
   }
 </script>
-<script>
-  var isUpdatingTrackListing = false;
-  
+<script>  
   function updateTrackListing()
   {
-    if (isUpdatingTrackListing == true)
-      return;
-      
-    isUpdatingTrackListing = true;
     
     $.get("/Server/getsongs.php?screen=" + screenId, function(data)
     {
@@ -122,10 +116,7 @@
       }
       
       table.html(newTableHtml);
-      
     });
-    
-    isUpdatingTrackListing = false;
   }
   
   $.get("/Server/getscreens.php?showpin=1", function(data)
