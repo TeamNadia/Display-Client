@@ -18,9 +18,7 @@
     #TrackListingTable
     {
       table-layout: fixed;
-      border-style: solid;
-      border-color: white;
-      border-width: 20px;
+      border: 2px solid white;
       max-height: 100%;
       width: 100%
     }
@@ -28,17 +26,12 @@
 
     td
     {
-      word-wrap:break-word;
+      word-wrap: break-word;
     }
 
-    #newTableHtml
+    .WelcomeText
     {
-      table-layout: fixed;
-      border-style: solid;
-      border-color: white;
-      border-width: 20px;
-      max-height: 100%;
-      width: 100%
+      font-size: 20px;
     }
 
   </style>
@@ -49,12 +42,15 @@
   <div class="row">
     <div class="col-sm-3">
       <h3 class="text-center">Welcome to <span id="ScreenLocation"></span></h3>
+      <hr>
       <br>
-      Your screen is <bold><span id="ScreenName"></span></bold>.
+      <div class="WelcomeText">
+        Your screen is <bold><span id="ScreenName"></span></bold>.
+        <br>
+        Use the PIN <bold><span id="ScreenPIN"></bold>to control this screen.</span>
+      </div>
       <br>
-      Use the PIN <bold><span id="ScreenPIN"></bold>to control this screen.</span>
-      <br>
-      <div style = "overflow-x auto"> 
+      <div style = "overflow-x auto; overflow-y: hidden;"> 
         <table id="TrackListingTable"></table>
       </div> 
     </div>
