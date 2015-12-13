@@ -47,19 +47,18 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/jquery.getUrlParam.js"></script>
-<script src="https://youtube.com/iframe_api"></script>
+<!--<script src="https://youtube.com/iframe_api"></script>-->
 <script>
   var screenId = $(document).getUrlParam("screen");
   
-  // var tag = document.createElement('script');
-  // tag.src = "https://youtube.com/iframe_api";
-  // var firstScriptTag = document.getElementsByTagName('script')[0];
-  // firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+  var tag = document.createElement('script');
+  tag.src = "https://youtube.com/iframe_api";
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
   
-  
-  $(document).ready(function()
-  {
-    var player;
+  var player;
+  function onYouTubeIframeAPIReady()
+  {    
     player = new YT.Player('player', 
     {
       height:   '100%',
@@ -71,15 +70,18 @@
         'onStateChange':  onPlayerStateChange
       }
     });
-  })
-  function onYouTubeIframeAPIReady()
-  {
-    
   }
   
   function onPlayerReady(event)
   {
-    loadVideo(event);
+    if ((".hiddenVideoId")[0])
+    {
+      loadVideo(event);
+    }  
+    else
+    {
+      setTimeout(loadvideo(event), 200);
+    }
   }
   
   var done = false;
