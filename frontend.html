@@ -65,13 +65,13 @@
       width:    '100%',
       events:
       {
-        'onReady':        onPlayerReady,
+        // 'onReady':        onPlayerReady,
         'onStateChange':  onPlayerStateChange
       }
     });
   }
   
-  function onPlayerReady(event)
+  /*function onPlayerReady(event)
   {
     if ($("input.hiddenVideoId")[0])
     {
@@ -81,14 +81,13 @@
     {
       setTimeout(onPlayerReady, 500, event);
     }
-  }
+  }*/
   
-  var done = false;
   function onPlayerStateChange(event)
   {
     if (event.data == YT.PlayerState.ENDED)
     {
-      // loadVideo(event);
+      loadVideo(event);
     }
   }
   
@@ -157,7 +156,20 @@
     setInterval(updateTrackListing, 2000);
   });
   
-  
+  $(document).ready(function()
+  {
+    var videoId = $(".hiddenVideoId:first").attr("value");
+    
+    $.get("/Server/geturl.php?screen=" + screenId + "&id=" + videoId, function(data)
+    {
+      console.log("Let's load " + data + "?version=3");
+      player.loadVideoByUrl(
+        {
+          mediaContentUrl: data + "?version=3"
+        }
+      );
+    });
+  });
 </script>
 </body>
 </html>
