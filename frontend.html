@@ -41,7 +41,16 @@
   $.get("/Server/getscreens.php", function(data)
   {
     var obj = JSON.parse(data);
-    alert(data);
+    var i, screenData;
+    for (i = 0; i < obj.length; i++)
+    {
+      if (i == screenId)
+      {
+        screenData = obj[i];
+      }
+    }
+    
+    alert(screenData);
   });
 </script>
 </body>
