@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Bootstrap Example</title>
+  <title>Music TV</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -36,7 +36,8 @@
     </div>
     <div class="col-sm-10">
       <div class="embed-responsive embed-responsive-16by9"> <!-- sets the aspect ratio of the video-->
-        <iframe class="embed-responsive-item" src="http://www.youtube.com/embed/ePbKGoIGAXY"></iframe> 
+        <!-- <iframe class="embed-responsive-item" src="http://www.youtube.com/embed/ePbKGoIGAXY"></iframe> -->
+        <div id="YouTubePlayer"></div>
       </div>
     </div>
   </div>
@@ -47,8 +48,62 @@
 <script src="js/bootstrap.min.js"></script>
 <script src="js/jquery.getUrlParam.js"></script>
 <script>
-  var isUpdatingTrackListing = false;
   var screenId = $(document).getUrlParam("screen");
+  
+  var tag = document.createElement('script');
+  tag.src = "https://youtube.com/iframe_api";
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+  
+  var player;
+  function onYouTubeIframeAPIReady()
+  {
+    player = new YT.player('player', 
+    {
+      height:   '100%',
+      width:    '100%',
+      events:
+      {
+        'onReady':        onPlayerReady,
+        'onStateChange':  onPlayerStateChange
+      }
+    });
+  }
+  
+  function onPlayerReady(event)
+  {
+    loadVideo(event);
+  }
+  
+  var done = false;
+  function onPlayerStateChange(event)
+  {
+    if (event.data == YT.PlayerState.ENDED)
+    {
+      loadVideo(event);
+    }
+  }
+  
+  function loadVideo(event)
+  {
+    event.target.clearVideo();
+    
+    var videoId = $("input.videoId").first().val();
+    
+    $.get("/Server/geturl.php?screen=" + screenId + "&id=" + videoId, function(data)
+    {
+      event.target.cueVideoByUrl(
+        {
+          mediaContentUrl: data
+        }
+      );
+      
+      event.target.playVideo();
+    });
+  }
+</script>
+<script>
+  var isUpdatingTrackListing = false;
     
   function updateTrackListing()
   {
@@ -66,7 +121,7 @@
       for (i = 0; i < obj.length; i++)
       {
         newTableHtml += '<tr><td><img src="' + obj[i]['thumbnail'] + '"></td><td><span style="font-weight: bold;">' + obj[i]['artist']
-        + '</span><br>' + obj[i]['track'] + '</td><td><input type="hidden" id="id" value="' + obj[i]['id'] + '"></td></tr>';
+        + '</span><br>' + obj[i]['track'] + '</td><td><input type="hidden" class="videoId" id="id" value="' + obj[i]['id'] + '"></td></tr>';
       }
       
       if (newTableHtml != table.html())
