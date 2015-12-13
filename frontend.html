@@ -38,7 +38,8 @@
 <script src="js/jquery.getUrlParam.js"></script>
 <script>
   var screenId = $(document).getUrlParam("screen");
-  $.get("/Server/getscreens.php", function(data)
+  
+  $.get("/Server/getscreens.php?showpin=1", function(data)
   {
     var obj = JSON.parse(data);
     var i, screenData;
@@ -50,7 +51,10 @@
       }
     }
     
-    alert(screenData);
+    $("#ScreenName").html(screenData['name']);
+    $("#ScreenLocation").html(screenData['location']);
+    $("#ScreenPIN").html(screenData['pin']);
+    
   });
 </script>
 </body>
