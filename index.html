@@ -18,7 +18,10 @@
     #TrackListingTable
     {
       border-width: 0;
+      max-height: 400px;
     }
+    tr:hover{background-color:#f5f5f5}
+
   </style>
 </head>
 <body>
@@ -28,11 +31,13 @@
     <div class="col-sm-2">
       <h3 class="text-center">Welcome to <span id="ScreenLocation"></span></h3>
       <br>
-      Your screen is <span id="ScreenName"></span>.
+      Your screen is <strong><span id="ScreenName"></strong></span>.
       <br>
-      Use the PIN <span id="ScreenPIN"></span> to control this screen.
+      Use the PIN <strong><span id="ScreenPIN"></strong></span> to control this screen.
       <br>
-      <table id="TrackListingTable"></table>
+      <div style = "overflow-x auto">
+        <table id="TrackListingTable"></table>
+      </div>
     </div>
     <div class="col-sm-10">
       <div class="embed-responsive embed-responsive-16by9"> <!-- sets the aspect ratio of the video-->
