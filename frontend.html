@@ -47,17 +47,19 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/jquery.getUrlParam.js"></script>
+<script src="https://youtube.com/frame_api"></script>
 <script>
   var screenId = $(document).getUrlParam("screen");
   
-  var tag = document.createElement('script');
-  tag.src = "https://youtube.com/iframe_api";
-  var firstScriptTag = document.getElementsByTagName('script')[0];
-  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+  // var tag = document.createElement('script');
+  // tag.src = "https://youtube.com/iframe_api";
+  // var firstScriptTag = document.getElementsByTagName('script')[0];
+  // firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
   
-  var player;
+  
   $(document).ready(function()
   {
+    var player;
     player = new YT.Player('player', 
     {
       height:   '100%',
