@@ -89,7 +89,7 @@
   {
     event.target.clearVideo();
     
-    var videoId = $(".hiddenVideoId").first().val();
+    var videoId = $(".hiddenVideoId:first").attr("value");
     alert(videoId);
     
     $.get("/Server/geturl.php?screen=" + screenId + "&id=" + videoId, function(data)
