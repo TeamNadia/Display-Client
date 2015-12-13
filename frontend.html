@@ -58,6 +58,7 @@
   var player;
   function onYouTubeIframeAPIReady()
   {
+    alert("API Ready");
     player = new YT.Player('player', 
     {
       height:   '100%',
@@ -72,12 +73,14 @@
   
   function onPlayerReady(event)
   {
+    alert("player ready");
     loadVideo(event);
   }
   
   var done = false;
   function onPlayerStateChange(event)
   {
+    alert("player state change");
     if (event.data == YT.PlayerState.ENDED)
     {
       loadVideo(event);
@@ -86,6 +89,7 @@
   
   function loadVideo(event)
   {
+    alert("Loading video");
     event.target.clearVideo();
     
     var videoId = $("input.videoId").first().val();
