@@ -59,6 +59,7 @@
     
     $.get("/Server/getsongs.php?screen=" + screenId, function(data)
     {
+      alert(data);
       var obj = JSON.parse(data);
       var i;
       var table = $("#TrackListingTable");
