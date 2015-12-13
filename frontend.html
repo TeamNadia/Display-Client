@@ -59,15 +59,14 @@
     
     $.get("/Server/getsongs.php?screen=" + screenId, function(data)
     {
-      alert(data);
       var obj = JSON.parse(data);
       var i;
       var table = $("#TrackListingTable");
       var newTableHtml = "";
       for (i = 0; i < obj.length; i++)
       {
-        newTableHtml += '<tr><td><img src="' + obj['thumbnail'] + '"></td><td><span style="font-weight: bold;">' + obj['artist']
-        + '</span><br>' + obj['track'];
+        newTableHtml += '<tr><td><img src="' + obj[i]['thumbnail'] + '"></td><td><span style="font-weight: bold;">' + obj[i]['artist']
+        + '</span><br>' + obj[i]['track'];
       }
       
       if (newTableHtml != table.html())
